@@ -1,8 +1,11 @@
 package models;
 
-import sun.reflect.generics.tree.IntSignature;
+
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "lessons")
@@ -13,6 +16,8 @@ public class Lesson {
     private int classroomNumber;
     private Course course;
     private Instructor instructor;
+    private List<Student> students;
+
 
     public Lesson(){}
 
@@ -21,6 +26,7 @@ public class Lesson {
         this.classroomNumber = classroomNumber;
         this.course = course;
         this.instructor = instructor;
+        this.students = new ArrayList<Student>();
     }
 
     @Id
@@ -70,5 +76,24 @@ public class Lesson {
 
     public void setInstructor(Instructor instructor) {
         this.instructor = instructor;
+    }
+
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @ManyToMany
+    @JoinTable(
+            name = "lessons_students",
+            joinColumns = {@JoinColumn(name = "lesson_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "student_id", nullable = false, updatable = false)}
+    )
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public void addStudent(Student student){
+        this.students.add(student);
     }
 }
