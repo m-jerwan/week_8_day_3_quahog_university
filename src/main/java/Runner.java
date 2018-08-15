@@ -14,12 +14,13 @@ public class Runner {
         Student studentStoo = new Student("Stoo", 30, 2, mentorMike, courseSwimming);
         DBHelper.save(studentStoo);
 
+        Instructor instructor1 = new Instructor("Alex");
+        DBHelper.save(instructor1);
 
-        Lesson lessonMath = new Lesson("Maths", 3, courseSwimming);
+        Lesson lessonMath = new Lesson("Maths", 3, courseSwimming, instructor1);
         DBHelper.save(lessonMath);
 
-        Instructor instructorAlex = new Instructor("Alex");
-        DBHelper.save(instructorAlex);
+
 
 
 
